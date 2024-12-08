@@ -33,20 +33,44 @@ export class UserFormComponent {
   }
 
   onSubmit(): void {
+    debugger
     if (this.registrationForm.valid) {
+      debugger
       console.log(this.registrationForm.value);
-      alert('Registration successful!');
+      debugger
+      this.dataObj = this.registrationForm.value;
+      this.apiservice.postUserRegistration(this.dataObj).subscribe((res:any)=>{
+        debugger
+        if(res.username){
+          debugger
+          alert('Registration successful!');
+        }
+        else{
+          debugger
+          alert(res.message)
+        }
+      })
     } else {
-      alert('Please correct the errors in the form.');
+      alert();
     }
   }
   userlist: any [] =[];
 
   getAllUser(){
     debugger;
-    this.apiservice.getAllDept().subscribe((res:any)=>{
+    this.apiservice.getUser().subscribe((res:any)=>{
       debugger;
       this.userlist = res;
     });
   }
+  dataObj:any={
+    userid: 0,
+    username: "",
+    email:"",
+    address:"",
+    phone:"",
+    password:""
+  }
+
+
 }
